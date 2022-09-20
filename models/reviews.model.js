@@ -1,4 +1,5 @@
 const { db } = require('../utils/db.util');
+const { DataTypes } = require('sequelize');
 
 const Review = db.define('review', {
 	id: {

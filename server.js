@@ -1,18 +1,18 @@
+const { app } = require('./app');
+
 // import dotenv
 const dotenv = require('dotenv');
 dotenv.config({ path: './config.env' });
 
-const { app } = require('./app');
-
 // import utils
-// initModels
+const { initModels } = require('./models/initModels');
 const { db } = require('./utils/db.util');
 
 const startServer = async () => {
     try {
         await db.authenticate()
-        
-        // initModels implement
+
+        initModels();
 
         await db.sync();
 

@@ -11,8 +11,12 @@ const app = express();
 app.use(express.json());
 
 // import routes
+const {
+	usersRouter
+} = require('./routes/users.routes');
 
 // define endpoints
+app.use('/api/v1/users', usersRouter);
 
 // global error handler
 app.use(globalErrorHandler);

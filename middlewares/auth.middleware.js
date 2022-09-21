@@ -48,8 +48,12 @@ const protectSession = catchAsync(async (req, res, next) => {
 
 const protectUsersAccount = (req, res, next) => {
 	const { sessionUser, user } = req;
+	const { review } = req;
 
-	if (sessionUser.id !== user.id) {
+	// console.log(sessionUser);
+	console.log(review.userId);
+
+	if (sessionUser.id !== review.userId) {
 		return next(new AppError('You are not the owner of this account.', 403));
 	}
 
@@ -70,4 +74,4 @@ module.exports = {
 	protectSession,
 	protectUsersAccount,
 	protectAdmin
-};
+}; 

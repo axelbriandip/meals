@@ -7,11 +7,16 @@ const restaurantsRouter = express.Router();
 const {
     getAllRestaurants,
 	getAnRestaurant,
-	createRestaurant
+	createRestaurant,
+	updateRestaurant,
+	deleteRestaurant,
+	createReview,
+	updateReview
 } = require('../controllers/restaurants.controller');
 
 // Middlewares 
 const { restaurantExists } = require('../middlewares/restaurants.middleware');
+const { reviewExists } = require('../middlewares/reviews.middleware');
 
 const {
 	protectSession,
@@ -30,9 +35,10 @@ restaurantsRouter.get('/:id', restaurantExists, getAnRestaurant); // obtener 1 r
 restaurantsRouter.use(protectSession);
 
 restaurantsRouter.post('/', createRestaurantValidators, createRestaurant); // crear rest 
-// restaurantsRouter.patch('/:id', getAnOrder); // actualizar rest
-// restaurantsRouter.delete('/:id', userExists, protectUsersAccount, deleteUser); // desabilitar rest
-// restaurantsRouter.post('/reviews/:id', userExists, protectUsersAccount, updateUser); // crear reseña
+restaurantsRouter.patch('/:id', protectAdmin, restaurantExists, updateRestaurant); // actualizar rest
+restaurantsRouter.delete('/:id', protectAdmin, restaurantExists, deleteRestaurant); // desabilitar rest
+restaurantsRouter.post('/reviews/:id', restaurantExists, createReview); // crear reseña
+restaurantsRouter.patch('/reviews/:id', reviewExists, protectUsersAccount, reviewExists,updateReview); // actualizar reseña
 // restaurantsRouter.delete('/reviews/:id', userExists, protectUsersAccount, deleteUser); // eliminar reseña
 
 module.exports = { restaurantsRouter };

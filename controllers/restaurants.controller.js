@@ -60,8 +60,67 @@ const createRestaurant = catchAsync(async (req, res, next) => {
 	});
 });
 
+const updateRestaurant = catchAsync(async (req, res, next) => {
+	const { name, address } = req.body;
+	const { restaurant } = req;
+
+	await restaurant.update({ name, address });
+
+	res.status(200).json({
+		status: 'success',
+		data: { restaurant },
+	});
+});
+
+const deleteRestaurant = catchAsync(async (req, res, next) => {
+	const { restaurant } = req;
+
+	// Soft delete
+	await restaurant.update({ status: 'disabled' });
+
+	res.status(204).json({ status: 'success' });
+});
+
+const createReview = catchAsync(async (req, res, next) => {
+    const { comment, rating } = req.body;
+    const { sessionUser } = req;
+    const { id } = req.params;
+
+	const newReview = await Review.create({
+        userId: sessionUser.id,
+        comment,
+        rating,
+        restaurantId: id
+    });
+
+	// 201 -> Success and a resource has been created
+	res.status(201).json({
+		status: 'success',
+		data: { newReview }
+	});
+});
+
+const updateReview = catchAsync(async (req, res, next) => {
+	const { comment, rating } = req.body;
+	const { review } = req;
+
+    console.log(`review id -> ${review.id}`);
+    console.log(`review userId -> ${review.userId}`);
+
+	await review.update({ comment, rating });
+
+	res.status(200).json({
+		status: 'success',
+		data: { review },
+	});
+});
+
 module.exports = {
     getAllRestaurants,
     getAnRestaurant,
-    createRestaurant
+    createRestaurant,
+    updateRestaurant,
+    deleteRestaurant,
+    createReview,
+    updateReview
 };

@@ -11,12 +11,12 @@ const app = express();
 app.use(express.json());
 
 // import routes
-const {
-	usersRouter
-} = require('./routes/users.routes');
+const { usersRouter } = require('./routes/users.routes');
+const { restaurantsRouter } = require('./routes/restaurants.routes');
 
 // define endpoints
 app.use('/api/v1/users', usersRouter);
+app.use('/api/v1/restaurants', restaurantsRouter);
 
 // global error handler
 app.use(globalErrorHandler);

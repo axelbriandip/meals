@@ -9,7 +9,7 @@ const checkValidations = (req, res, next) => {
 	if (!errors.isEmpty()) {
 		const errorMessages = errors.array().map(err => err.msg);
 
-		const message = errorMessages.join('. ');
+		const message = errorMessages.join(' / ');
 
 		return next(new AppError(message, 400));
 	}
@@ -38,4 +38,28 @@ const createUserValidators = [
 	checkValidations
 ];
 
-module.exports = { createUserValidators };
+const createRestaurantValidators = [
+	body('name')
+		.isString()
+		.withMessage('Name must be a string')
+		.notEmpty()
+		.withMessage('Name cannot be empty')
+		.isLength({ min: 2 })
+		.withMessage('Name must be at least 2 characters'),
+	body('address')
+		.isString()
+		.withMessage('Address must be a string')
+		.notEmpty()
+		.withMessage('Address cannot be empty')
+		.isLength({ min: 2 })
+		.withMessage('Address must be at least 2 characters'),
+	body('rating')
+		.isNumeric()
+		.withMessage('Rating must be a number'),
+	checkValidations
+];
+
+module.exports = {
+	createUserValidators,
+	createRestaurantValidators
+};

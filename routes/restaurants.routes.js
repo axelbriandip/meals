@@ -35,11 +35,11 @@ restaurantsRouter.get('/:id', restaurantExists, getAnRestaurant); // obtener 1 r
 // Protecting endpoints
 restaurantsRouter.use(protectSession);
 
-restaurantsRouter.post('/', createRestaurantValidators, createRestaurant); // crear rest 
-restaurantsRouter.patch('/:id', protectAdmin, restaurantExists, updateRestaurant); // actualizar rest
-restaurantsRouter.delete('/:id', protectAdmin, restaurantExists, deleteRestaurant); // desabilitar rest
-restaurantsRouter.post('/reviews/:id', protectAdmin, restaurantExists, createReview); // crear reseña
-restaurantsRouter.patch('/reviews/:id', protectAdmin, reviewExists, protectUsersAccount, reviewExists, updateReview); // actualizar reseña
-restaurantsRouter.delete('/reviews/:id', protectAdmin, reviewExists, protectUsersAccount, reviewExists, deleteReview); // eliminar reseña
+restaurantsRouter.post('/', createRestaurantValidators, createRestaurant);
+restaurantsRouter.patch('/:id', protectAdmin, restaurantExists, updateRestaurant);
+restaurantsRouter.delete('/:id', protectAdmin, restaurantExists, deleteRestaurant);
+restaurantsRouter.post('/reviews/:id', protectAdmin, restaurantExists, createReview);
+restaurantsRouter.patch('/reviews/:id', protectAdmin, reviewExists, protectUsersAccount, reviewExists, updateReview);
+restaurantsRouter.delete('/reviews/:id', protectAdmin, reviewExists, protectUsersAccount, reviewExists, deleteReview);
 
 module.exports = { restaurantsRouter };

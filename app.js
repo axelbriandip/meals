@@ -13,10 +13,12 @@ app.use(express.json());
 // import routes
 const { usersRouter } = require('./routes/users.routes');
 const { restaurantsRouter } = require('./routes/restaurants.routes');
+const { mealsRouter } = require('./routes/meals.routes');
 
 // define endpoints
 app.use('/api/v1/users', usersRouter);
 app.use('/api/v1/restaurants', restaurantsRouter);
+app.use('/api/v1/meals', mealsRouter);
 
 // global error handler
 app.use(globalErrorHandler);

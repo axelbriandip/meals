@@ -59,7 +59,26 @@ const createRestaurantValidators = [
 	checkValidations
 ];
 
+const createMealValidators = [
+	body('name')
+		.isString()
+		.withMessage('Name must be a string')
+		.notEmpty()
+		.withMessage('Name cannot be empty')
+		.isLength({ min: 2 })
+		.withMessage('Name must be at least 2 characters'),
+	body('price')
+		.isNumeric()
+		.withMessage('Price must be numeric')
+		.notEmpty()
+		.withMessage('Price cannot be empty')
+		.isLength({ min: 2 })
+		.withMessage('Price must be at least 2 characters'),
+	checkValidations
+];
+
 module.exports = {
 	createUserValidators,
-	createRestaurantValidators
+	createRestaurantValidators,
+	createMealValidators
 };

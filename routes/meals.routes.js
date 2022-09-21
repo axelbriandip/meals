@@ -33,7 +33,7 @@ mealsRouter.get('/:id', mealExists, getAnMealActive); // get an meal
 mealsRouter.use(protectSession);
 
 mealsRouter.post('/:id', createMeal); // create meal
-mealsRouter.patch('/:id', updateMeal); // update meal
-mealsRouter.delete('/:id', deleteMeal); // disabled meal
+mealsRouter.patch('/:id', protectAdmin, mealExists, updateMeal); // update meal
+mealsRouter.delete('/:id', protectAdmin, mealExists, deleteMeal); // disabled meal
 
 module.exports = { mealsRouter };

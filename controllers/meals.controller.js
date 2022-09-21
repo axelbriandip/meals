@@ -57,11 +57,24 @@ const createMeal = catchAsync(async (req, res, next) => {
 });
 
 const updateMeal = catchAsync(async (req, res, next) => {
-    // block code
+    const { name, price } = req.body;
+	const { meal } = req;
+
+	await meal.update({ name, price });
+
+	res.status(200).json({
+		status: 'success',
+		data: { meal },
+	});
 });
 
 const deleteMeal = catchAsync(async (req, res, next) => {
-    // block code
+    const { meal } = req;
+
+	// Soft delete
+	await meal.update({ status: 'disabled' });
+
+	res.status(204).json({ status: 'success' });
 });
 
 module.exports = {

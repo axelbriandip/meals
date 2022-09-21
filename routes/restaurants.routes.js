@@ -38,8 +38,8 @@ restaurantsRouter.use(protectSession);
 restaurantsRouter.post('/', createRestaurantValidators, createRestaurant); // crear rest 
 restaurantsRouter.patch('/:id', protectAdmin, restaurantExists, updateRestaurant); // actualizar rest
 restaurantsRouter.delete('/:id', protectAdmin, restaurantExists, deleteRestaurant); // desabilitar rest
-restaurantsRouter.post('/reviews/:id', restaurantExists, createReview); // crear reseña
-restaurantsRouter.patch('/reviews/:id', reviewExists, protectUsersAccount, reviewExists, updateReview); // actualizar reseña
-restaurantsRouter.delete('/reviews/:id', reviewExists, protectUsersAccount, reviewExists, deleteReview); // eliminar reseña
+restaurantsRouter.post('/reviews/:id', protectAdmin, restaurantExists, createReview); // crear reseña
+restaurantsRouter.patch('/reviews/:id', protectAdmin, reviewExists, protectUsersAccount, reviewExists, updateReview); // actualizar reseña
+restaurantsRouter.delete('/reviews/:id', protectAdmin, reviewExists, protectUsersAccount, reviewExists, deleteReview); // eliminar reseña
 
 module.exports = { restaurantsRouter };

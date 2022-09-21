@@ -11,7 +11,8 @@ const {
 	updateRestaurant,
 	deleteRestaurant,
 	createReview,
-	updateReview
+	updateReview,
+	deleteReview
 } = require('../controllers/restaurants.controller');
 
 // Middlewares 
@@ -38,7 +39,7 @@ restaurantsRouter.post('/', createRestaurantValidators, createRestaurant); // cr
 restaurantsRouter.patch('/:id', protectAdmin, restaurantExists, updateRestaurant); // actualizar rest
 restaurantsRouter.delete('/:id', protectAdmin, restaurantExists, deleteRestaurant); // desabilitar rest
 restaurantsRouter.post('/reviews/:id', restaurantExists, createReview); // crear reseña
-restaurantsRouter.patch('/reviews/:id', reviewExists, protectUsersAccount, reviewExists,updateReview); // actualizar reseña
-// restaurantsRouter.delete('/reviews/:id', userExists, protectUsersAccount, deleteUser); // eliminar reseña
+restaurantsRouter.patch('/reviews/:id', reviewExists, protectUsersAccount, reviewExists, updateReview); // actualizar reseña
+restaurantsRouter.delete('/reviews/:id', reviewExists, protectUsersAccount, reviewExists, deleteReview); // eliminar reseña
 
 module.exports = { restaurantsRouter };

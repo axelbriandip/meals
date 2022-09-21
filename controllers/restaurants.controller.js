@@ -104,15 +104,21 @@ const updateReview = catchAsync(async (req, res, next) => {
 	const { comment, rating } = req.body;
 	const { review } = req;
 
-    console.log(`review id -> ${review.id}`);
-    console.log(`review userId -> ${review.userId}`);
-
 	await review.update({ comment, rating });
 
 	res.status(200).json({
 		status: 'success',
 		data: { review },
 	});
+});
+
+const deleteReview = catchAsync(async (req, res, next) => {
+	const { review } = req;
+
+	// Soft delete
+	await review.update({ status: 'deleted' });
+
+	res.status(204).json({ status: 'success' });
 });
 
 module.exports = {
@@ -122,5 +128,6 @@ module.exports = {
     updateRestaurant,
     deleteRestaurant,
     createReview,
-    updateReview
+    updateReview,
+    deleteReview
 };

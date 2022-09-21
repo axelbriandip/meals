@@ -50,9 +50,6 @@ const protectUsersAccount = (req, res, next) => {
 	const { sessionUser, user } = req;
 	const { review } = req;
 
-	// console.log(sessionUser);
-	console.log(review.userId);
-
 	if (sessionUser.id !== review.userId) {
 		return next(new AppError('You are not the owner of this account.', 403));
 	}

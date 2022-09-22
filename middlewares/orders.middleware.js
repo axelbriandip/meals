@@ -8,7 +8,7 @@ const { AppError } = require('../utils/appError.util');
 const orderExists = catchAsync(async (req, res, next) => {
 	const { id } = req.params;
 
-	const order = await Order.findOne({ where: { id }});
+	const order = await Order.findOne({ where: { id, status: 'active' }});
 
 	// If order doesn't exist..
 	if (!order) {

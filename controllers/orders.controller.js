@@ -52,11 +52,25 @@ const getOrders = catchAsync(async (req, res, next) => {
 });
 
 const orderCompleted = catchAsync(async (req, res, next) => {
-    // block code
+	const { order } = req;
+
+	await order.update({ status: 'completed' });
+
+	res.status(200).json({
+		status: 'success',
+		data: { order },
+	});
 });
 
 const orderCancelled = catchAsync(async (req, res, next) => {
-    // block code
+	const { order } = req;
+
+	await order.update({ status: 'cancelled' });
+
+	res.status(200).json({
+		status: 'success',
+		data: { order },
+	});
 });
 
 module.exports = {

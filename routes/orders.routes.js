@@ -6,8 +6,8 @@ const ordersRouter = express.Router();
 // auth
 const {
 	protectSession,
-	protectUsersAccount,
 	protectAdmin,
+    protectOrdersOwners
 } = require('../middlewares/auth.middleware');
 
 // Controllers
@@ -28,9 +28,9 @@ const {
 // Protecting endpoints
 ordersRouter.use(protectSession);
 
-ordersRouter.get('/me', getOrders); // get orders of session user
-ordersRouter.post('/', createOrder); // create order
-ordersRouter.patch('/:id', orderCompleted); // order completed
-ordersRouter.delete('/:id', orderCancelled); // order cancelled
+ordersRouter.get('/me', getOrders);
+ordersRouter.post('/', createOrder);
+ordersRouter.patch('/:id', orderExists, protectOrdersOwners, orderCompleted);
+ordersRouter.delete('/:id', orderExists, protectOrdersOwners, orderCancelled);
 
 module.exports = { ordersRouter };

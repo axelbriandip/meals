@@ -12,6 +12,7 @@ const { User } = require('../models/users.model');
 const { catchAsync } = require('../utils/catchAsync.util');
 const { AppError } = require('../utils/appError.util');
 
+// sessionUser
 const protectSession = catchAsync(async (req, res, next) => {
 	// Get token
 	let token;
@@ -48,9 +49,28 @@ const protectSession = catchAsync(async (req, res, next) => {
 
 const protectUsersAccount = (req, res, next) => {
 	const { sessionUser, user } = req;
-	const { review } = req;
+
+	if (sessionUser.id !== user.userId) {
+		return next(new AppError('You are not the owner of this account.', 403));
+	}
+
+	next();
+};
+
+const protectReviewsOwners = (req, res, next) => {
+	const { sessionUser, review } = req;
 
 	if (sessionUser.id !== review.userId) {
+		return next(new AppError('You are not the owner of this account.', 403));
+	}
+
+	next();
+};
+
+const protectOrdersOwners = (req, res, next) => {
+	const { sessionUser, order } = req;
+
+	if (sessionUser.id !== order.userId) {
 		return next(new AppError('You are not the owner of this account.', 403));
 	}
 
@@ -70,5 +90,7 @@ const protectAdmin = (req, res, next) => {
 module.exports = {
 	protectSession,
 	protectUsersAccount,
+	protectOrdersOwners,
+	protectReviewsOwners,
 	protectAdmin
-}; 
+};

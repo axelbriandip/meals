@@ -50,12 +50,12 @@ const protectSession = catchAsync(async (req, res, next) => {
 const protectUsersAccount = (req, res, next) => {
 	const { sessionUser, user } = req;
 
-	if (sessionUser.id !== user.userId) {
+	if (sessionUser.id !== user.id) {
 		return next(new AppError('You are not the owner of this account.', 403));
 	}
 
 	next();
-};
+}; 
 
 const protectReviewsOwners = (req, res, next) => {
 	const { sessionUser, review } = req;

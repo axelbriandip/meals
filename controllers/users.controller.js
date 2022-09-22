@@ -9,6 +9,8 @@ dotenv.config({ path: './config.env' });
 // models
 const { User } = require('../models/users.model');
 const { Order } = require('../models/orders.model');
+const { Restaurant } = require('../models/restaurants.model');
+const { Meal } = require('../models/meals.model');
 
 // utils
 const { catchAsync } = require('../utils/catchAsync.util');
@@ -24,7 +26,18 @@ const getOrders = catchAsync(async (req, res, next) => {
 	const users = await User.findOne({
 		attributes: { exclude: ['password'] },
 		where: { id: sessionUser.id },
-		include: { model: Order },
+		include: {
+			model: Order,
+			required: false, // outer join
+			where: { status: 'active' },
+			include: {
+				model: Meal,
+				include: {
+					model: Restaurant
+				}
+			}
+		}
+
 	});
 
 	res.status(200).json({
@@ -43,7 +56,13 @@ const getAnOrder = catchAsync(async (req, res, next) => {
 		where: { id: sessionUser.id },
 		include: {
             model: Order,
-            where: { id }
+            where: { id },
+			include: {
+				model: Meal,
+				include: {
+					model: Restaurant
+				}
+			}
         },
 	});
 

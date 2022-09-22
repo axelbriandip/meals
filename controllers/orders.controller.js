@@ -5,6 +5,7 @@ dotenv.config({ path: './config.env' });
 // models
 const { Order } = require('../models/orders.model');
 const { Meal } = require('../models/meals.model');
+const { Restaurant } = require('../models/restaurants.model');
 
 // utils
 const { catchAsync } = require('../utils/catchAsync.util');
@@ -42,7 +43,13 @@ const getOrders = catchAsync(async (req, res, next) => {
     const { sessionUser } = req;
 
 	const orders = await Order.findAll({
-		where: { userId: sessionUser.id }
+		where: { userId: sessionUser.id },
+		include: {
+			model: Meal,
+			include: {
+				model: Restaurant
+			}
+		}
 	});
 
 	res.status(200).json({

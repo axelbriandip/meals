@@ -21,8 +21,8 @@ const { reviewExists } = require('../middlewares/reviews.middleware');
 
 const {
 	protectSession,
-	protectUsersAccount,
 	protectAdmin,
+	protectReviewsOwners
 } = require('../middlewares/auth.middleware');
 
 const {
@@ -39,7 +39,7 @@ restaurantsRouter.post('/', createRestaurantValidators, createRestaurant);
 restaurantsRouter.patch('/:id', protectAdmin, restaurantExists, updateRestaurant);
 restaurantsRouter.delete('/:id', protectAdmin, restaurantExists, deleteRestaurant);
 restaurantsRouter.post('/reviews/:id', protectAdmin, restaurantExists, createReview);
-restaurantsRouter.patch('/reviews/:id', protectAdmin, reviewExists, protectUsersAccount, reviewExists, updateReview);
-restaurantsRouter.delete('/reviews/:id', protectAdmin, reviewExists, protectUsersAccount, reviewExists, deleteReview);
+restaurantsRouter.patch('/reviews/:id', protectAdmin, reviewExists, protectReviewsOwners, updateReview);
+restaurantsRouter.delete('/reviews/:id', protectAdmin, reviewExists, protectReviewsOwners, deleteReview);
 
 module.exports = { restaurantsRouter };

@@ -16,7 +16,10 @@ const { AppError } = require('../utils/appError.util');
 
 const getAllMealActive = catchAsync(async (req, res, next) => {
 	const meals = await Meal.findAll({
-		where: { status: 'active' }
+		where: { status: 'active' },
+		include: {
+			model: Restaurant
+		}
 	});
 
 	res.status(200).json({
@@ -30,7 +33,9 @@ const getAnMealActive = catchAsync(async (req, res, next) => {
 
 	const meal = await Meal.findOne({
 		where: { id },
-		include: { model: Restaurant }
+		include: {
+			model: Restaurant
+		}
 	});
 
 	res.status(200).json({
